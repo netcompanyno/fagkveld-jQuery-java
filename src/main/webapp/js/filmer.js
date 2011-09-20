@@ -77,14 +77,18 @@ Filmer.aktiverLagringAvNyFilm = function(skjemaId, tabellId) {
 
   skjema.find("input[type=submit]").click(function(event) {
     event.preventDefault();
+    var lagreKnapp = jQuery(this);
 
     if (!Filmer.harValideringsfeil(skjema)) {
+      lagreKnapp.attr("disabled", "disabled");
+
       jQuery.post(
           skjema.attr("action"),
           skjema.serialize(),
           function(filmer) {
             Filmer.leggTilFilmer(filmer, tabellId);
             skjema.find("input[type=reset]").click();
+            lagreKnapp.removeAttr("disabled");
           },
           "json"
       );
