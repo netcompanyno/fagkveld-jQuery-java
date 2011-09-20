@@ -6,63 +6,77 @@
     <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.js"></script>
     <script type="text/javascript" src="js/jquery.validate-1.8.1.js"></script>
     <script type="text/javascript" src="js/jquery.tablesorter-2.0.5b.js"></script>
+    <script type="text/javascript" src="js/jquery.textarearesizer-1.0.4.js"></script>
+    <script type="text/javascript" src="js/jquery.lightbox-0.5.js"></script>
     <script type="text/javascript" src="js/filmer.js"></script>
     <link type="text/css" rel="stylesheet" href="css/stil.css"/>
-     <link type="text/css" rel="stylesheet" href="css/tablesorter.css"/>
+    <link type="text/css" rel="stylesheet" href="css/tablesorter.css"/>
+    <link type="text/css" rel="stylesheet" href="css/jquery.lightbox-0.5.css"/>
     <link type="text/css" rel="Stylesheet" href="css/ui-lightness/jquery-ui-1.8.16.custom.css"/>
     <meta charset=UTF-8>
   </head>
   <body>
-    <h1>Filmer</h1>
+    <div id="innhold">
+      <h1>Filmer</h1>
 
-    <div id="filmer">
-      <table id="filmtabell" class="tablesorter" data-url="/ajax/filmer">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Tittel</th>
-          <th>Regissør</th>
-          <th>Lanseringsdato</th>
-          <th>Bilder</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-
-      <input type="button" id="nullstillFilmer" value="Nullstill filmer" data-url="/ajax/filmer/nullstill"/>
-    </div>
-
-    <h3>Ny film</h3>
-
-    <div id="nyFilm">
-      <form action="/ajax/filmer" method="POST" id="nyFilmSkjema">
-        <table>
+      <div id="filmer">
+        <table id="filmtabell" class="tablesorter" data-url="/ajax/filmer">
+          <thead>
           <tr>
-            <th>Tittel:</th>
-            <td><input type="text" name="tittel" id="tittel" class="required"/></td>
+            <th>ID</th>
+            <th>Tittel</th>
+            <th>Regissør</th>
+            <th>Lanseringsdato</th>
+            <th>Kommentar</th>
+            <th>Bilder</th>
           </tr>
-          <tr>
-            <th>Regissør:</th>
-            <td><input type="text" name="regissor" id="regissor" class="required autocomplete" data-url="/ajax/filmer/regissorer"/></td>
-          </tr>
-          <tr>
-            <th>Lanseringdato:</th>
-            <td><input type="text" name="lanseringsdato" id="lanseringsdato" class="required date"/></td>
-          </tr>
+          </thead>
+          <tbody>
+          </tbody>
         </table>
-        <input type="reset" value="Tøm skjema" id="tomSkjema"/>
-        <input type="submit" id="leggTilFilm" value="Legg til film"/>
-      </form>
+
+        <input type="button" id="nullstillFilmer" value="Nullstill filmer" data-url="/ajax/filmer/nullstill"/>
+      </div>
+
+      <h3>Ny film</h3>
+
+      <div id="nyFilm">
+        <form action="/ajax/filmer" method="POST" id="nyFilmSkjema">
+          <table>
+            <tr>
+              <th>Tittel:</th>
+              <td><input type="text" name="tittel" id="tittel" class="required"/></td>
+            </tr>
+            <tr>
+              <th>Regissør:</th>
+              <td><input type="text" name="regissor" id="regissor" class="required autocomplete" data-url="/ajax/filmer/regissorer"/></td>
+            </tr>
+            <tr>
+              <th>Lanseringdato:</th>
+              <td><input type="text" name="lanseringsdato" id="lanseringsdato" class="required date"/></td>
+            </tr>
+            <tr>
+              <th>Kommentar:</th>
+              <td><textarea name="kommentar"></textarea></td>
+            </tr>
+          </table>
+          <input type="reset" value="Tøm skjema" id="tomSkjema"/>
+          <input type="submit" id="leggTilFilm" value="Legg til film"/>
+        </form>
+      </div>
+
+      <div id="nyttBilde" title="Legg til bilde">
+        <form id="nyttBildeSkjema" action="/ajax/filmer/leggTilBilde">
+          <input type="hidden" name="filmId" id="filmId" value=""/>
+          URL: <input type="text" name="url" id="url"/>
+        </form>
+      </div>
     </div>
 
     <script type="text/javascript">
       jQuery(document).ready(function() {
-        Filmer.lastFilmer("#filmtabell", "#nullstillFilmer", "#nyFilmSkjema");
-        // legge til urler for bilder, og slideshow
-        // flere plugins fra evurdering? stretch? cookie?
+        Filmer.lastFilmer("#filmtabell", "#nullstillFilmer", "#nyFilmSkjema", "#nyttBilde");
       });
-
     </script>
   </body>
 </html>

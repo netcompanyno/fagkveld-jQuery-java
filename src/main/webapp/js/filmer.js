@@ -1,12 +1,15 @@
 var Filmer = {};
 
-Filmer.lastFilmer = function(tabellId, nullstillId, skjemaId) {
+Filmer.lastFilmer = function(tabellId, nullstillId, skjemaId, dialogId) {
   Filmer.hentFilmerOgLeggTilRader(tabellId);
   Filmer.aktiverAutocomplete();
   Filmer.aktiverDatovelger();
   Filmer.aktiverLagringAvNyFilm(skjemaId, tabellId);
   Filmer.aktiverNullstillingAvFilmer(nullstillId, tabellId);
   Filmer.aktiverSorterbareTabeller();
+  Filmer.aktiverNyttBildeDialog(dialogId, tabellId);
+  Filmer.aktiverNyttBildeKnapper(dialogId);
+  Filmer.aktiverTextAreaResizer();
 };
 
 Filmer.hentFilmerOgLeggTilRader = function(tabellId) {
@@ -28,8 +31,19 @@ Filmer.lagTabellRad = function(film) {
            "<td>" + film.tittel + "</td>" +
            "<td>" + film.regissor + "</td>" +
            "<td>" + Filmer.konverterDato(film) + "</td>" +
-           "<td>" + film.bilder + "</td>" +
+           "<td>" + film.kommentar + "</td>" +
+           "<td>" + Filmer.leggTilBilder(film) + "<input type='button' class='nyttBildeKnapp' value='+' data-film-id='" + film.id + "'/></td>" +
          "</tr>";
+};
+
+Filmer.leggTilBilder = function(film) {
+  var bilder = "";
+
+  jQuery.each(film.bilder, function(i, bilde) {
+    bilder += "<a class='lightbox' href='" + bilde + "'><img class='thumbnail' src='" + bilde + "'/></a>";
+  });
+
+  return bilder;
 };
 
 Filmer.leggTilFilmer = function(filmer, tabellId) {
@@ -42,6 +56,7 @@ Filmer.leggTilFilmer = function(filmer, tabellId) {
 
   Filmer.oppdaterSorterbareTabeller();
   Filmer.giFokusTilForsteElement();
+  Filmer.aktiverLightBox();
 };
 
 Filmer.aktiverDatovelger = function() {
@@ -104,4 +119,47 @@ Filmer.oppdaterSorterbareTabeller = function() {
 
 Filmer.giFokusTilForsteElement = function() {
   jQuery("input[type=text]:first").focus();
+};
+
+Filmer.aktiverNyttBildeDialog = function(dialogId, tabellId) {
+  var dialog = jQuery(dialogId);
+
+  dialog.dialog({
+    autoOpen: false,
+    height: 300,
+    width: 350,
+    modal: true,
+    buttons: {
+      "Lagre": function() {
+        jQuery.post(
+            dialog.find("form").attr("action"),
+            dialog.find("form").serialize(),
+            function(filmer) {
+              Filmer.leggTilFilmer(filmer, tabellId);
+            },
+            "json"
+        );
+        jQuery(this).dialog("close");
+      },
+      "Avbryt": function() {
+        jQuery(this).dialog("close");
+      }
+    }
+  });
+};
+
+Filmer.aktiverNyttBildeKnapper = function(dialogId) {
+  jQuery(".nyttBildeKnapp").live("click", function() {
+    jQuery(dialogId).dialog("open");
+    jQuery(dialogId).find("input[type=hidden]").val(jQuery(this).data("filmId"));
+    jQuery(dialogId).find("input[type=text]").val("");
+  });
+};
+
+Filmer.aktiverTextAreaResizer = function() {
+  jQuery("textarea").TextAreaResizer();
+};
+
+Filmer.aktiverLightBox = function() {
+	jQuery('a.lightbox').lightBox({fixedNavigation:true});
 };

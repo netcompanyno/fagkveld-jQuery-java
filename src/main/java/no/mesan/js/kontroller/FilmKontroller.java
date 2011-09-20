@@ -69,6 +69,31 @@ public class FilmKontroller {
         return regissorer;
     }
 
+    @RequestMapping(value = "leggTilBilde", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Film> leggTilBilde(final HttpSession session,
+                                   @RequestParam("filmId") final Integer filmId,
+                                   @RequestParam("url") final String url) {
+        final List<Film> filmer = hentFilmer(session);
+        final Film film = hentFilm(filmer, filmId);
+
+        if (film != null) {
+            film.getBilder().add(url);
+        }
+
+        return filmer;
+    }
+
+    private Film hentFilm(final List<Film> filmer, final Integer filmId) {
+        for (final Film film : filmer) {
+            if (film.getId().equals(filmId)) {
+                return film;
+            }
+        }
+
+        return null;
+    }
+
     @SuppressWarnings("unchecked")
     private List<Film> hentFilmerFraSesjonen(final HttpSession session) {
         return (List<Film>) session.getAttribute(FILMER);
@@ -77,13 +102,19 @@ public class FilmKontroller {
     private List<Film> lagFilmer() {
         final List<Film> filmer = new ArrayList<Film>();
 
+        final ArrayList<String> roboCopBilder = new ArrayList<String>();
+        roboCopBilder.add("http://www.otherlandtoys.co.uk/robocop800.jpg");
+        roboCopBilder.add("http://www.reocities.com/Hollywood/8356/robocopCD.jpg");
+        roboCopBilder.add("http://poorandweird.files.wordpress.com/2010/09/robocop-feat1.jpg");
         filmer.add(new Film(1, "RoboCop", "Paul Verhoeven",
                 new DateTime().withDayOfMonth(17).withMonthOfYear(JULY).withYear(1987).toDate(),
-                new ArrayList<String>()));
+                "Come quietly or there will be... trouble.", roboCopBilder));
 
+        final ArrayList<String> speedBilder = new ArrayList<String>();
+        speedBilder.add("http://www.movie-list.com/posters/big/zoom/speed.jpg");
         filmer.add(new Film(2, "Speed", "Jan de Bontn",
                 new DateTime().withDayOfMonth(10).withMonthOfYear(JUNE).withYear(1994).toDate(),
-                new ArrayList<String>()));
+                "Ok, Jack, this is it. Don't get dead.", speedBilder));
         return filmer;
     }
 
