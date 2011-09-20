@@ -6,6 +6,7 @@ Filmer.lastFilmer = function(tabellId, nullstillId, skjemaId) {
   Filmer.aktiverDatovelger();
   Filmer.aktiverLagringAvNyFilm(skjemaId, tabellId);
   Filmer.aktiverNullstillingAvFilmer(nullstillId, tabellId);
+  Filmer.aktiverSorterbareTabeller();
 };
 
 Filmer.hentFilmerOgLeggTilRader = function(tabellId) {
@@ -39,9 +40,8 @@ Filmer.leggTilFilmer = function(filmer, tabellId) {
     tabellRader.append(Filmer.lagTabellRad(film));
   });
 
-  jQuery(tabellId).trigger("update"); // TODO
-  jQuery(tabellId).trigger("applyWidgets"); // TODO
-  jQuery("input[type=text]:first").focus(); // TODO
+  Filmer.oppdaterSorterbareTabeller();
+  Filmer.giFokusTilForsteElement();
 };
 
 Filmer.aktiverDatovelger = function() {
@@ -91,4 +91,17 @@ Filmer.aktiverNullstillingAvFilmer = function(nullstillId, tabellId) {
         "json"
     );
   });
+};
+
+Filmer.aktiverSorterbareTabeller = function () {
+  jQuery("table").tablesorter({widgets: ['zebra']});
+};
+
+Filmer.oppdaterSorterbareTabeller = function() {
+  jQuery("table").trigger("update");
+  jQuery("table").trigger("applyWidgets");
+};
+
+Filmer.giFokusTilForsteElement = function() {
+  jQuery("input[type=text]:first").focus();
 };
