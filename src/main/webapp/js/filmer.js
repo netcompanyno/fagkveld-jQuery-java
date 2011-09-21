@@ -1,6 +1,6 @@
-var Filmer = {};
+var Filmer = Filmer || {};
 
-Filmer.lastFilmer = function(tabellId, nullstillId, skjemaId, dialogId) {
+Filmer.init = function(tabellId, nullstillId, skjemaId, dialogId) {
   Filmer.hentFilmerOgLeggTilRader(tabellId);
   Filmer.aktiverAutocomplete();
   Filmer.aktiverDatovelger();
