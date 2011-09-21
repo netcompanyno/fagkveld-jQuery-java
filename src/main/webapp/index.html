@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <meta charset=UTF-8>
     <title>JavaScript Ajax</title>
     <script type="text/javascript" src="js/jquery-1.6.3.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.js"></script>
@@ -8,18 +9,19 @@
     <script type="text/javascript" src="js/jquery.tablesorter-2.0.5b.js"></script>
     <script type="text/javascript" src="js/jquery.textarearesizer-1.0.4.js"></script>
     <script type="text/javascript" src="js/jquery.lightbox-0.5.js"></script>
+    <script type="text/javascript" src="js/jquery.uitablefilter-1.0.js"></script>
     <script type="text/javascript" src="js/filmer.js"></script>
     <link type="text/css" rel="stylesheet" href="css/stil.css"/>
     <link type="text/css" rel="stylesheet" href="css/tablesorter.css"/>
     <link type="text/css" rel="stylesheet" href="css/jquery.lightbox-0.5.css"/>
     <link type="text/css" rel="Stylesheet" href="css/ui-lightness/jquery-ui-1.8.16.custom.css"/>
-    <meta charset=UTF-8>
   </head>
   <body>
     <div id="innhold">
       <h1>Filmer</h1>
 
       <div id="filmer">
+        <div id="filmfilter">Filter: <input type="text" class="tablefilter" data-tabell-id="#filmer"/></div>
         <table id="filmtabell" class="tablesorter" data-url="/ajax/filmer">
           <thead>
           <tr>

@@ -10,6 +10,7 @@ Filmer.lastFilmer = function(tabellId, nullstillId, skjemaId, dialogId) {
   Filmer.aktiverNyttBildeDialog(dialogId, tabellId);
   Filmer.aktiverNyttBildeKnapper(dialogId);
   Filmer.aktiverTextAreaResizer();
+  Filmer.aktiverFilterBoks();
 };
 
 Filmer.hentFilmerOgLeggTilRader = function(tabellId) {
@@ -166,4 +167,11 @@ Filmer.aktiverTextAreaResizer = function() {
 
 Filmer.aktiverLightBox = function() {
 	jQuery('a.lightbox').lightBox({fixedNavigation:true});
+};
+
+Filmer.aktiverFilterBoks = function() {
+  jQuery(".tablefilter").keyup(function() {
+    var tabellId = jQuery(".tablefilter").data("tabellId");
+    jQuery.uiTableFilter(jQuery(tabellId), this.value);
+  });
 };

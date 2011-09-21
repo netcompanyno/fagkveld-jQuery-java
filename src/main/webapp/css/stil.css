@@ -48,7 +48,10 @@ input[type=text] {
 img.thumbnail {
     max-height: 50px;
     max-width: 100px;
-    border: 0;
+    border: 1px solid gray;
+    padding: 2px;
+    margin: 2px 4px;
+    vertical-align: bottom;
 }
 
 #nyttBilde {
@@ -74,4 +77,8 @@ div.grippie {
     margin-bottom:0pt;
     width:95%;
     height: 20%;
+}
+
+#filmfilter {
+    text-align: right;
 }
