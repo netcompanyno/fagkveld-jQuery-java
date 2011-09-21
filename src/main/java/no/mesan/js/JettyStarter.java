@@ -4,16 +4,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- * Starter Jetty med eVurdering indre sone, for bruk utenfor server-støtten i IntelliJ IDEA og MyEclipse.
- *
- * <p>For å bruke denne klassen trenger du en mappe i prosjektet hvor property filene kan ligge.
- * F.eks <code>evurdering/run</code>. I run mappen kopierer du filene som normalt kopieres
- * til Jetty mappen. Lag et nytt Eclipse prosjekt som peker til run mappen.
- * Propertiene som normalt settes opp rett på config til serveren i MyEclipse
- * settes isteden opp som vm arguments i denne klassens run configuration. Run mappen må
- * settes som working directory på samme fane.
- *
- * @author tmo
+ * kjør som en vanlig java-klasse, i debug modus.
  */
 public final class JettyStarter {
 
