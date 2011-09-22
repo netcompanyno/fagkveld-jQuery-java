@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset=UTF-8>
+    <title>Foiler</title>
+    <script type="text/javascript" src="js/jquery-1.6.3.js"></script>
+  </head>
+  <body>
+    <div id="innhold">
+      <input type="button" id="clickEventKnapp" value="Click event knapp"/>
+      <br/>
+
+      <p id="folgeTekst">Skriv noe under</p>
+      <input type="text" id="folgeTekstfelt"/>
+      <br/><br/>
+
+      <input type="button" class="liveKnapp" value="Dupliser meg"/>
+      <br/><br/>
+
+      <input type="button" id="triggerKnapp" value="Trigger event knapp"/>
+      <br/><br/>
+
+      <form action="tull" method="POST">
+        <input type="submit" id="submitKnapp" value="Submit knapp"/>
+      </form>
+    </div>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        testIsFunksjoner();
+        testLikhet();
+        testInArray();
+        testTrim();
+        testBrowser();
+        testSupport();
+        testJSON();
+        testClick();
+        testBind();
+        testLive();
+        testTrigger();
+        testPreventDefault();
+        testNamespace();
+        testScope();
+        testFunksjoner();
+      });
+
+      /**
+       * Utskrift:
+       *   jQuery.isPlainObject(objekt): true
+       *   jQuery.isArray(array): true
+       *   jQuery.isFunction(funksjon): true
+       */
+      function testIsFunksjoner() {
+        var objekt = {};
+        var array = [];
+        var funksjon = function() {};
+
+        console.log("jQuery.isPlainObject(objekt): " + jQuery.isPlainObject(objekt));
+        console.log("jQuery.isArray(array): " + jQuery.isArray(array));
+        console.log("jQuery.isFunction(funksjon): " + jQuery.isFunction(funksjon));
+      }
+
+      /**
+       * Utskrift:
+       *   1 == '1': true
+       *   1 === '1': false
+       *   1 == 1: true
+       *   1 === 1: true
+       */
+      function testLikhet() {
+        console.log("1 == '1': " + (1 == '1'));
+        console.log("1 === '1': " + (1 === '1'));
+        console.log("1 == 1: " + (1 == 1));
+        console.log("1 === 1: " + (1 === 1));
+      }
+
+      /**
+       * Utskrift:
+       *   jQuery.inArray(1, array): 0
+       *   jQuery.inArray(2, array): 1
+       *   jQuery.inArray(3, array): 2
+       *   jQuery.inArray(4, array): -1
+       */
+      function testInArray() {
+        var array = [1, 2, 3];
+
+        console.log("jQuery.inArray(1, array): " + jQuery.inArray(1, array));
+        console.log("jQuery.inArray(2, array): " + jQuery.inArray(2, array));
+        console.log("jQuery.inArray(3, array): " + jQuery.inArray(3, array));
+        console.log("jQuery.inArray(4, array): " + jQuery.inArray(4, array));
+      }
+
+      /**
+       * Utskrift:
+       *   jQuery.trim(' hei på deg... '): 'hei på deg...'
+       */
+      function testTrim() {
+        console.log("jQuery.trim('  hei på deg...  '): '" + jQuery.trim('  hei på deg...  ') + "'");
+      }
+
+      /**
+       * Utskrift:
+       *   Opera: 11.51
+       *   Mozilla: 6.0.2
+       *   Internet Explorer: 8.0
+       *   WebKit: 535.1
+       */
+      function testBrowser() {
+        if (jQuery.browser.msie) {
+          console.log("Internet Explorer: " + jQuery.browser.version);
+        } else if (jQuery.browser.webkit) {
+          console.log("WebKit: " + jQuery.browser.version);
+        } else if (jQuery.browser.opera) {
+          console.log("Opera: " + jQuery.browser.version);
+        } else if (jQuery.browser.mozilla) {
+          console.log("Mozilla: " + jQuery.browser.version);
+        }
+      }
+
+      /**
+       * Utskrift:
+       *   jQuery.support.boxModel: true
+       *   jQuery.support.ajax: true
+       */
+      function testSupport() {
+        console.log("jQuery.support.boxModel: " + jQuery.support.boxModel);
+        console.log("jQuery.support.ajax: " + jQuery.support.ajax);
+      }
+
+      /**
+       * Utskrift:
+       *   Navn: Kalle - Alder: 10
+       */
+      function testJSON() {
+        var jsonObjekt = jQuery.parseJSON('{"navn":"Kalle", "alder":"10"}');
+        console.log("Navn: " + jsonObjekt.navn + " - Alder: " + jsonObjekt.alder);
+      }
+
+      function testClick() {
+        jQuery("#clickEventKnapp").click(function() {
+          alert("Du trykket på '" + jQuery(this).val() + "'");
+        });
+      }
+
+      function testBind() {
+        jQuery("#folgeTekstfelt").bind("keyup", function() {
+          jQuery("#folgeTekst").text(jQuery(this).val());
+        });
+      }
+
+      function testLive() {
+        jQuery(".liveKnapp").live("click", function() {
+          jQuery(this).after("<input type='button' class='liveKnapp' value='Dupliser meg'/>");
+        });
+      }
+
+      function testTrigger() {
+        jQuery("#triggerKnapp").click(function() {
+          jQuery("#clickEventKnapp").trigger("click");
+        });
+      }
+
+      function testPreventDefault() {
+        jQuery("#submitKnapp").click(function(event) {
+          if (!confirm("Er du sikker?")) {
+            event.preventDefault();
+          }
+        });
+      }
+
+      function testNamespace() {
+        // Slik brukes namespacet
+        MittNamespace.minFunksjon();
+      }
+
+      function testScope() {
+        // Denne blir nå tilgjengeliggjort i globalt scope
+        globalVariabel = "global";
+
+        // Denne er bare tilgjengelig i funksjonen
+        var lokalVariabel = "lokal";
+
+        // Lager variabelen i i funksjonens scope, ikke løkkens scope
+        for (var i = 0; i < 2; i++) {
+          console.log(i);
+        }
+
+        // Variabelen i er allerede deklarert - kan gi uønskede effekter
+        for (var i = 0; i < 2; i++) {
+           console.log(i);
+        }
+      }
+
+      function ganskeVanligFunksjon(inputVariabel) {
+        console.log("function ganskeVanligFunksjon(): " + inputVariabel);
+
+        return "hilsen ganskeVanligFunksjon()";
+      }
+
+      enAnnenVanligFunksjon = function(enAnnenInputVariabel) {
+        console.log("enAnnenVanligFunksjon = function(): " + enAnnenInputVariabel);
+      };
+
+      function testFunksjoner() {
+        enAnnenVanligFunksjon(ganskeVanligFunksjon("1"));
+
+        setTimeout(function() {
+          console.log("function()");
+        }, 100);
+      }
+
+      // Oppretter namespacet
+      var MittNamespace = MittNamespace || {};
+
+      // Lager en variabel i namespacet
+      MittNamespace.minVariabel = "Namespacet variabel";
+
+      // Lager en funksjon i namespacet
+      MittNamespace.minFunksjon = function() {
+        console.log("Namespacet funksjon: " + MittNamespace.minVariabel);
+      };
+    </script>
+  </body>
+</html>
