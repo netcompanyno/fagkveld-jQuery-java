@@ -39,6 +39,9 @@
         testLive();
         testTrigger();
         testPreventDefault();
+        testNamespace();
+        testScope();
+        testFunksjoner();
       });
 
       /**
@@ -164,6 +167,58 @@
           }
         });
       }
+
+      function testNamespace() {
+        // Slik brukes namespacet
+        MittNamespace.minFunksjon();
+      }
+
+      function testScope() {
+        // Denne blir nå tilgjengeliggjort i globalt scope
+        globalVariabel = "global";
+
+        // Denne er bare tilgjengelig i funksjonen
+        var lokalVariabel = "lokal";
+
+        // Lager variabelen i i funksjonens scope, ikke løkkens scope
+        for (var i = 0; i < 2; i++) {
+          console.log(i);
+        }
+
+        // Variabelen i er allerede deklarert - kan gi uønskede effekter
+        for (var i = 0; i < 2; i++) {
+           console.log(i);
+        }
+      }
+
+      function ganskeVanligFunksjon(inputVariabel) {
+        console.log("function ganskeVanligFunksjon(): " + inputVariabel);
+
+        return "hilsen ganskeVanligFunksjon()";
+      }
+
+      enAnnenVanligFunksjon = function(enAnnenInputVariabel) {
+        console.log("enAnnenVanligFunksjon = function(): " + enAnnenInputVariabel);
+      };
+
+      function testFunksjoner() {
+        enAnnenVanligFunksjon(ganskeVanligFunksjon("1"));
+
+        setTimeout(function() {
+          console.log("function()");
+        }, 100);
+      }
+
+      // Oppretter namespacet
+      var MittNamespace = MittNamespace || {};
+
+      // Lager en variabel i namespacet
+      MittNamespace.minVariabel = "Namespacet variabel";
+
+      // Lager en funksjon i namespacet
+      MittNamespace.minFunksjon = function() {
+        console.log("Namespacet funksjon: " + MittNamespace.minVariabel);
+      };
     </script>
   </body>
 </html>
