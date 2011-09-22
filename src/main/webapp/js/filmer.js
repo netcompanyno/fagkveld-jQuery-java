@@ -61,7 +61,7 @@ Filmer.leggTilFilmer = function(filmer, tabellId) {
 };
 
 Filmer.aktiverDatovelger = function() {
-  jQuery(".date").datepicker();
+  jQuery(".date").datepicker({dateFormat: 'dd.mm.yy'});
 };
 
 Filmer.aktiverAutocomplete = function() {

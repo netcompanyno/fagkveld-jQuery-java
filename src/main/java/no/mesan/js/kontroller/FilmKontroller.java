@@ -2,7 +2,9 @@ package no.mesan.js.kontroller;
 
 import static org.joda.time.DateTimeConstants.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +12,10 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -142,5 +147,11 @@ public class FilmKontroller {
         }
 
         return ++hoyesteId;
+    }
+
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
     }
 }
