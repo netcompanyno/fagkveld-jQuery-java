@@ -103,6 +103,13 @@ Filmer.harValideringsfeil = function(skjema) {
 
 Filmer.aktiverNullstillingAvFilmer = function(nullstillId, tabellId) {
   jQuery(nullstillId).click(function(e) {
+    var godkjent = confirm("Er du sikker på at du vil tilbakestille filmene?");
+
+    if (!godkjent) {
+      event.preventDefault();
+      return;
+    }
+
     jQuery.post(
         jQuery(this).data("url"),
         function(filmer) {
